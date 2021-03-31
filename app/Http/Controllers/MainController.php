@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Exports\ProduitsExport;
 use App\Http\Requests\EditProduitFormRequest;
 use App\Http\Requests\ProduitFormRequest;
+use App\Mail\NouveauProduitAtoutee;
 use App\Models\Produit;
 use App\Models\User;
 use App\Models\Commande;
 use App\Models\Ministere;
+use App\Notifications\NouveauProduitNotification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MainController extends Controller
 {
     public function afficheAccueil()
     {
+        dd(Auth::user()->role->role);
+
         return view('pages.front-office.welcome',
         [
             'nomSite'=> 'Service en ligne MTMUSR',
@@ -80,6 +87,12 @@ class MainController extends Controller
             'poids'      =>$request->poids,
         ]);
         //dd($produit);
+        //return redirect()->back()->with('statut','Produit ajouté avec succes');
+        $user = User::first();
+        $users = User::all();
+        //Mail::to($user)->send(new NouveauProduitAtoutee($produit));
+        $user->notify(new NouveauProduitNotification($produit));
+        //Notification::send($users, new NouveauProduitNotification($produit));
         return redirect()->back()->with('statut','Produit ajouté avec succes');
     }
     //Fonction pour créer un nouveau produit --deuxième approche
@@ -251,4 +264,16 @@ class MainController extends Controller
         //dd('ok');
         return Excel::download(new ProduitsExport, 'Produits.xls');
     }
+   /* public function sendMail()
+    {
+        $user = User::first();
+        Mail::to($user)->send(new NouveauProduitAtoutee());
+        dd('Le mail a bien été envoyé');
+    }*/
+    //test-notification
+    /*public function sendNotification()
+    {
+        $user = User::first();
+        $user->notify(new NouveauProduitNotification($notification));
+    }*/
 }

@@ -14,17 +14,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
+
+/*Route::get('/', function () {
     return view('pages.front-office.welcome');
 })->name('accueil');
-
 Route::get('/procedure', function () {
     return view('pages.front-office.procedure');
-})->name('procedure');
-*/
+})->name('procedure');*/
+
 /*Approche Controller*/
-Route::get('/',[MainController::class,'afficheAccueil'])->name('accueil');
+Route::get('/',[MainController::class,'afficheAccueil'])->name('page.accueil');
 
 Route::get('procedure/{username}',[MainController::class,'afficheProcedure'])->name('procedure');
 //Appel de la fonction ajoutProduit --première approche
@@ -72,3 +71,24 @@ Route::put('produit/update/{id}',[MainController::class, 'updateProduit'])->name
 
 Route::resource('produits',ProduitController::class);
 Route::get('excel-export',[MainController::class,'excelExport'])->name('excel.export');
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+/*Route::get('/', function () {
+    return view('welcome');
+});*/
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+ 
+require __DIR__.'/auth.php';

@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone_muber',
         'password',
     ];
 
@@ -44,6 +45,15 @@ class User extends Authenticatable
     public function produits()
     {
         return $this->belongsToMany(Produit::class);
+    }
+
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->phone_number;
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
     
 }
