@@ -30,6 +30,7 @@ class EditProduitFormRequest extends FormRequest
            // 'poids'      =>'required|digits_between:1,5',
             'like'       =>'required|digits_between:1,5',
             'pays_source'=>'required|min:3|max:50',
+            'image'=>'file|mimes:jpg,bmp,png,svg|nullable',
         ];
     }
 }

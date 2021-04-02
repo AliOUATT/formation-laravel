@@ -22,7 +22,7 @@ class MainController extends Controller
 {
     public function afficheAccueil()
     {
-        dd(Auth::user()->role->role);
+        //dd(Auth::user()->role->role);
 
         return view('pages.front-office.welcome',
         [
@@ -76,6 +76,11 @@ class MainController extends Controller
             'pays_source'=>'required|min:3|max:50',
 
         ]);*/
+        $imageName = "default-image.jpeg";
+        if($request->file('image')){
+        $imageName = time()."_".$request->file("image")->getClientOriginalName();
+        $request->file("image")->storeAs("public/produits-images", $imageName);
+        }
         //Création du produit
         $produit = Produit::create([
             'uuid'       =>Str::uuid(),
@@ -85,13 +90,14 @@ class MainController extends Controller
             'like'       =>$request->like,
             'pays_source'=>$request->pays_source,
             'poids'      =>$request->poids,
+            'image'      =>$imageName,
         ]);
         //dd($produit);
         //return redirect()->back()->with('statut','Produit ajouté avec succes');
         $user = User::first();
         $users = User::all();
         //Mail::to($user)->send(new NouveauProduitAtoutee($produit));
-        $user->notify(new NouveauProduitNotification($produit));
+       // $user->notify(new NouveauProduitNotification($produit));
         //Notification::send($users, new NouveauProduitNotification($produit));
         return redirect()->back()->with('statut','Produit ajouté avec succes');
     }
@@ -213,7 +219,7 @@ class MainController extends Controller
         $commande->save();
         return redirect()->back()->with('statut','Commande ajoutée avec succès');
     }
-    //Annulation de la commande
+    //Annulation de la commandenew.pr
     public function annulerCommande($id)
     {
         Commande::destroy($id);
@@ -222,7 +228,8 @@ class MainController extends Controller
     //Formulaire d'ajout de produit
     public function produitForm()
     {
-        return view('pages.back-office.fproduit');
+        $produit = new Produit;
+        return view('pages.back-office.fproduit', ["produit"=>$produit]);
     }
     //Formulaire d'ajout de ministere
     public function ministereForm()

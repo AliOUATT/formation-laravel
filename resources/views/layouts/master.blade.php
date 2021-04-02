@@ -33,8 +33,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Produits</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             <a class="dropdown-item" href="{{ route('listP')}}">Liste</a>
-                            <a class="dropdown-item" href="{{ route('new.produit')}}">Ajout</a>
-                            <a class="dropdown-item" href="{{ route('excel.export')}}">Exporter</a>
+                            @if(Auth::user()!=null && Auth::user()->isAdmin())
+                             <a class="dropdown-item" href="{{ route('new.produit')}}">Ajout</a>
+                             <a class="dropdown-item" href="{{ route('excel.export')}}">Exporter</a>
+                            @endif
                             <!--<a class="dropdown-item" href="{{ route('compte')}}">Modification</a>
                             <a class="dropdown-item" href="{{ route('admin')}}">Supression</a>-->
                         </div>

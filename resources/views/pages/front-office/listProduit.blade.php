@@ -32,15 +32,21 @@
                                 
                            
                             <tr>
-                                <td>{{ $produit->designation }}</td>
-                                <td>{{ $produit->prix }} FCFA</td>
+                                <td> <img style= "width:50px; height:50px"src="{{asset('storage/produits-images/'.$produit->image)}}" alt="">{{ $produit->designation }}</td>
+                                <td>{{ bf_currency($produit->prix) }} </td>
                                 <td>{{ $produit->pays_source }}</td>
                                 <!--<td><a href="#" class="btn btn-success">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 25px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                                                        
                                     </a>
                                 </td>-->
-                                <td><a href="{{route('produits.edit',$produit->id)}}" class="btn btn-success">
+                                <td>
+                                    <a href="{{route('ajout.commande',$produit->id)}}" class="btn btn-primary">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 15px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                                           
+                                        </a>
+                                        @if(Auth::user()!=null && Auth::user()->isAdmin())
+                                    <a href="{{route('produits.edit',$produit->id)}}" class="btn btn-success">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 15px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                                                        
                                     </a>
@@ -65,10 +71,7 @@
                                     </a>-->
                                 <!--</td>-->
                               
-                                <a href="{{route('ajout.commande',$produit->id)}}" class="btn btn-primary">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 15px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                                                       
-                                    </a>
+                                @endif
                                 </td>
                             </tr>
                             @endforeach
