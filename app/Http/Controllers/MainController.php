@@ -127,7 +127,7 @@ class MainController extends Controller
         $user = User::first();
         //$produit->users()->attach($user);
 
-        $user=$produit->users;
+        $user=$produit->user;
         //dd($produit, $user);
 
         //vérification du contenu de la variable
